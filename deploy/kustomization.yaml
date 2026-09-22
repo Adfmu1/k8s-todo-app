@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- configmap/configMap.yaml
+- cronjob/cronJob.yaml
+- postgres/postgres.yaml
+- secrets/not_enc/secrets.yaml
+- jobs/jobDBmigration.yaml
+- todo-frontend/deployment.yaml
+- todo-frontend/service.yaml
+- todo-routing/ingress.yaml
+- todo-routing/middleware.yaml
+- todo-backend/deployment.yaml
+- todo-backend/service.yaml

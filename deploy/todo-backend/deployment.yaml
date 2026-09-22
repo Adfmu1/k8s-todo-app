@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-backend
+  template:
+    metadata:
+      labels:
+        app: todo-backend
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: todo-backend
+          image: adfmu/todo-backend:v1.0
+          imagePullPolicy: Always
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                    name: todo-configmap
+                    key: BACKEND_PORT
+            - name: POSTGRES_URL
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: POSTGRES_URL

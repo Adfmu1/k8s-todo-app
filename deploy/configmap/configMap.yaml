@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-configmap
+data:
+  BACKEND_PORT: "8990"
+  FRONTEND_PORT: "8989"

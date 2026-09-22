@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-frontend
+  template:
+    metadata:
+      labels:
+        app: todo-frontend
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: todo-frontend
+          image: adfmu/todo-frontend:v1.0
+          imagePullPolicy: Always
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: FRONTEND_PORT

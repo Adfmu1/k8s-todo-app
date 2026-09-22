@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration-job
+spec:
+  backoffLimit: 2
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: migrations
+          configMap:
+            name: db-migrations
+      containers:
+      - name: migration
+        image: migrate/migrate:v4.17.0
+        args:
+          - "-path=/migrations"
+          - "-database=$(DB_URL)"
+          - "up"
+        env:
+          - name: DB_URL
+            valueFrom:
+              secretKeyRef:
+                name: secrets
+                key: POSTGRES_URL_MIGRATION
+        volumeMounts:
+          - name: migrations
+            mountPath: /migrations
+      

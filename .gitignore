@@ -1,0 +1,8 @@
+not_enc
+*.log
+__pycache__/
+build*.sh
+monitoring
+todo-volume
+.env
+*old.yaml
